@@ -1,0 +1,5 @@
+#!/bin/bash
+FILE=$1
+OUT=${FILE%.*}.png
+cat $FILE | neato -Gsplines="true" -Gepsilon=0.00001 -Goverlap=scale -Gdefaultlen=1 -Tpng -o $OUT
+ncls -s none $OUT

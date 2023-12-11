@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ $(find /tmp/.brightness -mmin +2 | wc -l) -gt 0 ] 
+then
+	rm /tmp/.brightness
+fi
+
+if [ ! -e /tmp/.brightness ]
+then
+	ddcutil detect | grep "I2C" | sed 's/^.*\/dev/dev:\/dev/g' > /tmp/.brightness
+fi
+
+cat /tmp/.brightness | xargs -I _ ddccontrol -r 0x10 -W -5 _ &
